@@ -3,6 +3,8 @@
 #include <GuiEdit.au3>
 #include <GUIConstantsEx.au3>
 
+_EasyUpdate('http://test.com/update.ini', 'Test.exe', '1.0')
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _EasyUpdate
 ; Description ...: Kiểm tra cập nhật chương trình
@@ -46,6 +48,7 @@ Func _EasyUpdate($iniURL, $sciptName, $curVersion)
 
 		Local $newNameFile = $sFileName & " " & $lastedVersion & $sExtension
 		_downloadProgress($urlDownload, $newNameFile)
+		ConsoleWrite($urlDownload)
 		If Not @error Then
 			MsgBox(0 + 64, "Congratulations !", "Software update complete." & @CRLF & "Press OK to run new software")
 			If @Compiled Then ; if script Compile then delete current script
@@ -128,7 +131,7 @@ Func _downloadProgress($sURL, $sFileName)
 	_PathSplit($sURL, $szDrive, $szDir, $szFName, $szExt)
 	$iSize = InetGetSize($sURL)
 	$iTotalSize = Round($iSize / 1024)
-	$hDownload = INetGet($sURL, $sFileName, 16, 1) ; from InetConstants.au3:  $INET_FORCEBYPASS (16) = By-pass forcing the connection online, $INET_DOWNLOADBACKGROUND (1) = Background download
+	$hDownload = INetGet($sURL, $sFileName, 1, 1) ; from InetConstants.au3:  $INET_FORCEBYPASS (16) = By-pass forcing the connection online, $INET_DOWNLOADBACKGROUND (1) = Background download
 	ProgressOn("", "Download " & $szFName & "...", "Conecting...", -1, -1, 2 + 1)
 	Do
 		$iSec = @SEC
@@ -140,6 +143,7 @@ Func _downloadProgress($sURL, $sFileName)
 		$iTotalSize = $iTotalSize - (($iReadBytes - $iCurrentBytes) / 1024)
 		ProgressSet(100 - Round($iTotalSize / $iSize * 100000), 100 - Round($iTotalSize / $iSize * 100000) & "%")
 	Until InetGetInfo($hDownload, 2)
+	InetClose($hDownload)
 	ProgressOff()
 	If Not InetGetInfo($hDownload, 3) Then Return SetError(1, 0, 0)
 EndFunc   ;==>_downloadProgress
