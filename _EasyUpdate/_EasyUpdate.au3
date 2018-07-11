@@ -3,8 +3,6 @@
 #include <GuiEdit.au3>
 #include <GUIConstantsEx.au3>
 
-_EasyUpdate('http://test.com/update.ini', 'Test.exe', '1.0')
-
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _EasyUpdate
 ; Description ...: Kiểm tra cập nhật chương trình
