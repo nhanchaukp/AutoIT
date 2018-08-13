@@ -8,3 +8,4 @@
 ### Code của tôi
 - [_EasyUpdate](https://github.com/nhanchaukp/AutoIT/tree/master/_EasyUpdate) - Hỗ trợ cập nhật phần mềm với một dòng lệnh duy nhất
 - [Facebook AutoReact](https://github.com/nhanchaukp/AutoIT/tree/master/Facebook%20AutoReact) - Tự động biểu cảm trên new feed Facebook với nhiều lựa chọn hoặc ngẫu nhiên
+- [WIAAutomation](https://github.com/nhanchaukp/AutoIT/tree/master/WIAAutomation) - Wia scanner with Autoit, scan tài liệu bằng Autoit sử dụng WIA windows
