@@ -88,7 +88,7 @@ Func _scanNow($filepath, $open = 1, $brightness = 0, $contrast = 0,$quanlity=80 
 			;set quanlity format
 			$imgProcess.Filters(1).Properties("FormatID").Value = $formatSelect
 			$imgProcess.Filters(1).Properties("Quality").Value = $quanlity
-			$image = $IP.Apply($image)
+			$image = $imgProcess.Apply($image)
 			If IsObj($image) Then
 				$filepath = StringReplace($filepath, $sExtension, "(%s)" & StringLower($sExtension))
 				Local $x = 0, $finalPath
