@@ -41,7 +41,7 @@ Global $image
 Global $COMerror = ObjEvent("AutoIt.Error", "_evetError")
 Global $dialog = ObjCreate("WIA.CommonDialog")
 Global $imgProcess = ObjCreate( "Wia.ImageProcess")
-$imgProcess.Filters.Add($IP.FilterInfos("Convert").FilterID)
+$imgProcess.Filters.Add($imgProcess.FilterInfos("Convert").FilterID)
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _scanNow
 ; Description ...: Scan tài liệu bằng máy scan
