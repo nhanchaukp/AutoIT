@@ -40,7 +40,8 @@ Global $item
 Global $image
 Global $COMerror = ObjEvent("AutoIt.Error", "_evetError")
 Global $dialog = ObjCreate("WIA.CommonDialog")
-
+Global $imgProcess = ObjCreate( "Wia.ImageProcess")
+$imgProcess.Filters.Add($IP.FilterInfos("Convert").FilterID)
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: _scanNow
 ; Description ...: Scan tài liệu bằng máy scan
@@ -49,13 +50,14 @@ Global $dialog = ObjCreate("WIA.CommonDialog")
 ;                  $open 		- Tùy chọn mở thư mục sau khi scan: 1 - mở
 ;                  $brightness 	- Độ sáng ảnh scan. Min: -50, Max: 50
 ;                  $contrast 	- Độ tương phản ảnh scan. Min: -50, Max: 50
+;                  $quanlity 	- Chất lượng ảnh. Min: 0, Max: 100
 ;                  $colorMode 	- Chế độ màu. Xem ở trên "WiaImageIntent enumeration"
 ; Return values .:
 ; Author ........: nhanchau.com (email: me@nhanchau.com)
 ; Facebook ......: fb.com/chauthainhan
 ; Donate <3 - quyên góp ủng hộ : http://unghotoi.com/nhanchaukp
 ; ===============================================================================================================================
-Func _scanNow($filepath, $open = 1, $brightness = 0, $contrast = 0, $colorMode = $ColorIntent)
+Func _scanNow($filepath, $open = 1, $brightness = 0, $contrast = 0,$quanlity=80 , $colorMode = $ColorIntent)
 	Local $sDrive = "", $sDir = "", $sFileName = "", $sExtension = ""
 	_PathSplit($filepath, $sDrive, $sDir, $sFileName, $sExtension)
 	Local $formatSelect
@@ -83,6 +85,10 @@ Func _scanNow($filepath, $open = 1, $brightness = 0, $contrast = 0, $colorMode =
 			$item.Properties($wiaContrastPercents).Value = $contrast
 			$item.Properties($wiaColorMode).Value = $colorMode
 			$image = $dialog.ShowTransfer($item, $formatSelect)
+			;set quanlity format
+			$imgProcess.Filters(1).Properties("FormatID").Value = $formatSelect
+			$imgProcess.Filters(1).Properties("Quality").Value = $quanlity
+			$image = $IP.Apply($image)
 			If IsObj($image) Then
 				$filepath = StringReplace($filepath, $sExtension, "(%s)" & StringLower($sExtension))
 				Local $x = 0, $finalPath
